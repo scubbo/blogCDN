@@ -11,6 +11,10 @@ MAINTAINER Jack Jackson <scubbojj@gmail.com>
 # Set the server port as an environment variable
 ENV HEXO_SERVER_PORT=4000
 
+# Without this line, we were getting `ESOCKETTIMEDOUT` when trying to `npm install`
+# https://stackoverflow.com/a/37946399/1040915
+ENV UV_THREADPOOL_SIZE=128
+
 # Install requirements
 RUN \
  apt-get update && \
