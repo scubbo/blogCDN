@@ -27,16 +27,19 @@ WORKDIR /app
 # Expose Server Port
 EXPOSE ${HEXO_SERVER_PORT}
 
-# Build a base server and configuration if it doesnt exist, then start
+# Initialize hexo
+# (Note that this diverges from the original image setup, since this
+# assumes that there is no existing content - as doing `npm install`
+# at runtime was causing timeouts)
+# Note that this means this probably cannot be initialized with a
+# mounted directory that contains existing content. I don't know
+# whether it will overwrite existing content - beware!
+RUN \
+  hexo init && \
+  npm install && \
+  npm install --save hexo-admin
+
 CMD \
-  if [ "$(ls -A /app)" ]; then \
-    echo "***** App directory exists and has content, continuing *****"; \
-  else \
-    echo "***** App directory is empty, initialising with hexo and hexo-admin *****" && \
-    hexo init && \
-    npm install && \
-    npm install --save hexo-admin; \
-  fi; \
   if [ ! -f /app/requirements.txt ]; then \
     echo "***** App directory contains no requirements.txt file, continuing *****"; \
   else \
