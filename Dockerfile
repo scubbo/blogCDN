@@ -34,12 +34,19 @@ EXPOSE ${HEXO_SERVER_PORT}
 # Note that this means this probably cannot be initialized with a
 # mounted directory that contains existing content. I don't know
 # whether it will overwrite existing content - beware!
+#
+# TODO - uncertain whether `npm install` _before_ `hexo` init will work.
 RUN \
-  hexo init && \
   npm install && \
   npm install --save hexo-admin
 
 CMD \
+  if [ "$(ls -A /app)" ]; then \
+    echo "***** App directory exists and has content, continuing *****"; \
+  else \
+    echo "***** App directory is empty, initialising with hexo and hexo-admin *****" && \
+    hexo init; \
+  fi; \
   if [ ! -f /app/requirements.txt ]; then \
     echo "***** App directory contains no requirements.txt file, continuing *****"; \
   else \
