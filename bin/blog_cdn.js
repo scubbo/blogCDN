@@ -1,9 +1,0 @@
-#!/usr/bin/env node
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-require("source-map-support/register");
-const cdk = require("@aws-cdk/core");
-const blog_cdn_stack_1 = require("../lib/blog_cdn-stack");
-const app = new cdk.App();
-new blog_cdn_stack_1.BlogCdnStack(app, 'BlogCdnStack');
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmxvZ19jZG4uanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJibG9nX2Nkbi50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFDQSx1Q0FBcUM7QUFDckMscUNBQXFDO0FBQ3JDLDBEQUFxRDtBQUVyRCxNQUFNLEdBQUcsR0FBRyxJQUFJLEdBQUcsQ0FBQyxHQUFHLEVBQUUsQ0FBQztBQUMxQixJQUFJLDZCQUFZLENBQUMsR0FBRyxFQUFFLGNBQWMsQ0FBQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiIyEvdXNyL2Jpbi9lbnYgbm9kZVxuaW1wb3J0ICdzb3VyY2UtbWFwLXN1cHBvcnQvcmVnaXN0ZXInO1xuaW1wb3J0ICogYXMgY2RrIGZyb20gJ0Bhd3MtY2RrL2NvcmUnO1xuaW1wb3J0IHsgQmxvZ0NkblN0YWNrIH0gZnJvbSAnLi4vbGliL2Jsb2dfY2RuLXN0YWNrJztcblxuY29uc3QgYXBwID0gbmV3IGNkay5BcHAoKTtcbm5ldyBCbG9nQ2RuU3RhY2soYXBwLCAnQmxvZ0NkblN0YWNrJyk7XG4iXX0=
