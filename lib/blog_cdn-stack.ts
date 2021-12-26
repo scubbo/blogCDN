@@ -225,10 +225,6 @@ class DeploymentStack extends cdk.Stack {
     const originalBucket = Bucket.fromBucketName(this, 'originalBucketInStage',
       StringParameter.fromStringParameterName(
         this, 'originalBucketNameParameter', originalBucketParameterName).stringValue);
-    // TODO: It seems that CloudFront does not grant Origin Access
-    // if the bucket is not created in the same stack as the Distribution - so I've temporarily
-    // abandoned the "reference the bucket by name via SSM parameters" approach.
-    // I should raise a bug report on CDK for that.
     const finalBucket = new Bucket(this, 'finalBucket');
 
     const zone = HostedZone.fromLookup(this, 'baseZone', {
@@ -242,14 +238,24 @@ class DeploymentStack extends cdk.Stack {
       defaultBehavior: {
         origin: new S3Origin(finalBucket),
         viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-        edgeLambdas: [{
-          eventType: LambdaEdgeEventType.ORIGIN_REQUEST,
-          functionVersion: new experimental.EdgeFunction(this, 'EdgeFunction', {
-            runtime: Runtime.NODEJS_14_X,
-            code: Code.fromAsset('lambda'),
-            handler: 'index_html_translation.handler'
-          })
-        }]
+        edgeLambdas: [
+          {
+            eventType: LambdaEdgeEventType.ORIGIN_REQUEST,
+            functionVersion: new experimental.EdgeFunction(this, 'EdgeFunction', {
+              runtime: Runtime.NODEJS_14_X,
+              code: Code.fromAsset('lambda'),
+              handler: 'index_html_translation.handler'
+            })
+          },
+          {
+            eventType: LambdaEdgeEventType.VIEWER_RESPONSE,
+            functionVersion: new experimental.EdgeFunction(this, 'GnuTerryEdgeFunction', {
+              runtime: Runtime.NODEJS_14_X,
+              code: Code.fromAsset('lambda'),
+              handler: 'gnu_terry.handler'
+            })
+          }
+        ]
       },
       domainNames: [fullDomainName],
       certificate: certificate,
