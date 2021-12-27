@@ -102,6 +102,7 @@ export class BlogCdnStack extends Stack {
           'git submodule update --recursive',
           'cd ..', // pushd/popd doesn't seem to work in a CodeBuild context
           'find -L blogContent/blog', // Here we should now see the themes subfolders populated!
+          'HUGO_ENV=production',
           'hugo -v --source blogContent/blog'
         ],
         // https://github.com/aws/aws-cdk/issues/17224
