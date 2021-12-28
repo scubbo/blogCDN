@@ -71,7 +71,7 @@ export class BlogCdnStack extends Stack {
           // Next 4 lines - https://aws.amazon.com/blogs/infrastructure-and-automation/building-a-ci-cd-pipeline-for-hugo-websites/
           'apt-get update',
           'echo Installing hugo',
-          'curl -L -o hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.70.0/hugo_0.70.0_Linux-64bit.deb',
+          'curl -L -o hugo.deb https://github.com/gohugoio/hugo/releases/download/v0.91.2/hugo_extended_0.91.2_Linux-64bit.deb',
           'dpkg -i hugo.deb'
         ],
         commands: [
